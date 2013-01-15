@@ -1,0 +1,22 @@
+{
+  "name": "crates-for-rdio",
+  "version": "0.0.1",
+  "description": "Crates for Rdio®",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "rdio",
+    "music"
+  ],
+  "author": "Kevin Gorski",
+  "license": "MIT",
+  "dependencies": {
+    "rdio": "~1.0.1",
+    "express": "~3.0.6",
+    "oauth": "~0.9.8",
+    "jade": "~0.28.1"
+  }
+}

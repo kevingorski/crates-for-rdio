@@ -1,0 +1,14 @@
+- if(!oauth_access_token)
+  p
+    a(href='/oauth/login') Subscribe to Rdio? Login
+- else
+  p
+    a(href='/clear') Log out
+
+footer
+  p.right Powered by:
+    a(href='http://rdio.com') Rdio
+
+//- script(src='https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js')
+script
+  var playbackToken = '#{playbackToken}';
