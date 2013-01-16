@@ -1,5 +1,9 @@
 !!! 5
 html
   head
-    title Crates for Rdio
-  body!= body
+    block head
+      title Crates for Rdio
+      link(rel='stylesheet', href='all.css')
+  body
+    block content
+    block footer

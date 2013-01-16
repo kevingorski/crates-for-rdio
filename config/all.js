@@ -1,6 +1,10 @@
-var express = require('express');
+var express = require('express'),
+  stylus    = require('stylus'),
+  nib       = require('nib');
 
 module.exports = function(app) {
+  var staticFilePath = __dirname + '/../public';
+
   app.set('views', __dirname + '/../views');
   app.set('view engine', 'jade');
 
@@ -8,7 +12,18 @@ module.exports = function(app) {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
-  app.use(express.static(__dirname + '/../public'));
+
+  app.use(stylus.middleware({
+    src: staticFilePath,
+    compile: function compile(str, path) {
+      return stylus(str)
+        .set('filename', path)
+        .set('compress', true)
+        .use(nib())
+        .import('nib');
+    }
+  }));
+  app.use(express.static(staticFilePath));
 
   var appSettings = {
     rdio_oauth_request: 'http://api.rdio.com/oauth/request_token',
