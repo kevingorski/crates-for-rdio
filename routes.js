@@ -11,10 +11,33 @@ module.exports = function(app, rdio){
         if(err) {
           throw new Error(err);
         }
-        
-        res.render('index', {
-          playbackToken: JSON.parse(data).result
-        });
+
+
+        if(req.session.oauth_access_token) {
+          // Now get the current user
+          rdio.api(
+            req.session.oauth_access_token,
+            req.session.oauth_access_token_secret,
+            {
+              method: 'currentUser',
+              type: 'User',
+              extras: 'username,displayName'
+            }, function(err, result, response) {
+              if(err) throw new Error(err);
+
+              var user = JSON.parse(result).result;
+              //key, firstName, lastName, username, displayName, icon, libraryVersion
+              res.render('index', {
+                playbackToken: JSON.parse(data).result,
+                displayName: user.displayName,
+                icon: user.icon
+              });
+            });
+        } else {
+          res.render('index', {
+            playbackToken: JSON.parse(data).result
+          });
+        }
       }
     );
   });
@@ -50,6 +73,7 @@ module.exports = function(app, rdio){
       function(error, oauth_access_token, oauth_access_token_secret, results) {
         req.session.oauth_access_token = oauth_access_token;
         req.session.oauth_access_token_secret = oauth_access_token_secret;
+
         res.redirect("/");
       }
     );
