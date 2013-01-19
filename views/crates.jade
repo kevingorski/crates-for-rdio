@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  ol.crates
+    each crate in crates
+      li #{crate.name} (#{crate.createdAt})
+  ul
+    li
+      a(href='/crate/new') New Crate
+    li
+      a(href='/') Home

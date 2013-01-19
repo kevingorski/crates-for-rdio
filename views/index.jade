@@ -8,21 +8,20 @@ block content
     #welcome
       p Welcome #{displayName}!
       img.profile(alt="You!", src=icon, height=50, width=50)
+
+      ul
+        li
+          a(href='/clear') Log out
+        li
+          a(href='/crate/new') New Crate
+        li
+          a(href='/crate') List Crates
     
     ol.albums
       each album in albums
         li
           a(href=album.shortUrl)
             img(alt=album.name + ' by ' + album.artist, src=album.icon)
-    
-    div
-      a(href='/clear') Log out
-
-  footer
-    p Powered by: 
-      a(href='http://rdio.com') Rdio
-    p.disclaimer This product uses the Rdio API but is not endorsed, certified or otherwise approved in any way by Rdio®.
-
 
 block footer
   //- script(src='https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js')

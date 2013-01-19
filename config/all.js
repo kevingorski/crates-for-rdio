@@ -25,6 +25,10 @@ module.exports = function(app) {
   }));
   app.use(express.static(staticFilePath));
 
+
+
+  // models = require('./models')
+
   var appSettings = {
     rdio_oauth_request: 'http://api.rdio.com/oauth/request_token',
     rdio_oauth_access: 'http://api.rdio.com/oauth/access_token',

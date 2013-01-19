@@ -8,7 +8,8 @@ module.exports = function(app) {
 
   var appSettings = {
     port: 3000,
-    host: 'localhost'
+    host: 'localhost',
+    mongoUrl: 'mongodb://localhost/Crates'
   };
 
   Object.keys(appSettings).forEach(function(key) {

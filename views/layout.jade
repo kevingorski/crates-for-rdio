@@ -3,7 +3,11 @@ html
   head
     block head
       title Crates for Rdio®
-      link(rel='stylesheet', href='all.css')
+      link(rel='stylesheet', href='/all.css')
   body
     block content
+    footer
+      p Powered by: 
+        a(href='http://rdio.com') Rdio
+      p.disclaimer This product uses the Rdio API but is not endorsed, certified or otherwise approved in any way by Rdio®.
     block footer

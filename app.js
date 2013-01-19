@@ -1,10 +1,18 @@
-var express = require('express');
+var express = require('express'),
+  mongoose = require('mongoose');
 
 var app = express();
 
 app.configure(function() { require('./config/all')(app); });
 app.configure('development', function() { require('./config/development')(app); });
 app.configure('production', function() { require('./config/production')(app); });
+
+
+mongoose.connect(app.get('mongoUrl'));
+mongoose.connection.on('error', function(err) {
+  console.error('Connecting to mongo', err);
+});
+
 
 app.use(function(req, res, next){
   res.locals.oauth_access_token = req.session ? req.session.oauth_access_token : null;
@@ -26,7 +34,8 @@ var rdio = require('rdio')({
   callback_url: 'http://' + app.get('host') + ":" + app.get('port') + '/oauth/callback'
 });
 
-// Routes
+
+
 require('./routes')(app, rdio);
 
 app.listen(app.get('port'));

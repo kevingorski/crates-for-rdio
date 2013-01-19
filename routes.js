@@ -1,4 +1,6 @@
-var url = require('url');
+var url = require('url'),
+  models = require('./models'),
+  Crate = models.Crate;
 
 module.exports = function(app, rdio){
 
@@ -26,6 +28,8 @@ module.exports = function(app, rdio){
 
 
               var user = JSON.parse(userResult).result;
+
+              req.session.userKey = user.key;
 
               rdio.api(
                 req.session.oauth_access_token,
@@ -59,14 +63,41 @@ module.exports = function(app, rdio){
     );
   });
 
-  app.get ('/clear', function( req, res, params) {
+  app.get('/crate/new', function(req, res, params) {
+    // Must be authenticated
+    if(!req.session.oauth_access_token) return res.redirect('/');
+
+    var crate = new Crate({
+      ownerKey: req.session.userKey,
+      name: 'Test Crate'
+    });
+
+    crate.save(function(err, saved) {
+      if(err) console.error(err);
+
+      res.redirect('/crate');
+    });
+  });
+
+  app.get('/crate', function(req, res, params) {
+    // Must be authenticated
+    if(!req.session.oauth_access_token) return res.redirect('/');
+
+    Crate.find(function(err, crates) {
+      res.render('crates', {
+        crates: crates
+      });
+    });
+  });
+
+  app.get ('/clear', function(req, res, params) {
     req.session = null;
     res.redirect('/');
   });
 
-  app.get ('/oauth/login', function(req, res, params) {
+  app.get('/oauth/login', function(req, res, params) {
     if(req.session.oauth_access_token) {
-      res.redirect("/");
+      res.redirect('/');
       return;
     }
 
@@ -82,7 +113,7 @@ module.exports = function(app, rdio){
     });
   });
 
-  app.get ('/oauth/callback', function(req, res, params) {
+  app.get('/oauth/callback', function(req, res, params) {
     var parsedUrl = url.parse(req.url, true);
 
     rdio.getAccessToken(parsedUrl.query.oauth_token, req.session.oauth_token_secret, parsedUrl.query.oauth_verifier,
