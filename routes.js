@@ -2,7 +2,12 @@ var url = require('url'),
   models = require('./models'),
   Crate = models.Crate;
 
-module.exports = function(app, rdio){
+module.exports = function(app){
+  var rdio = require('rdio')({
+    rdio_api_key: app.get('rdio_api_key'),
+    rdio_api_shared: app.get('rdio_api_shared'),
+    callback_url: 'http://' + app.get('host') + ":" + app.get('port') + '/oauth/callback'
+  });
 
   app.get('/', function(req, res){
     rdio.getPlaybackToken(
