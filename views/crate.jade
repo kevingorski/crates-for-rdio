@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  h1 #{crate.name}
+  h2 #{crate.createdAt}
+  a(href='/crate/' + crate.id + '/edit') Edit
+
+  - if (crateAlbums)
+    ol.albums
+      each album in crateAlbums
+        li
+          form(method='post', action='/crate/' + crate.id)
+            a(href=album.rdioUrl)
+              img(alt=album.name + ' by ' + album.artistName, src=album.icon)
+            input(type='hidden', name='action', value='removeAlbum')
+            input(type='hidden', name='key', value=album.key)
+            button(type='submit') Remove from crate
+
+  ol.albums
+    each album in heavyRotationAlbums
+      li
+        form(method='post', action='/crate/' + crate.id)
+          a(href=album.shortUrl)
+            img(alt=album.name + ' by ' + album.artist, src=album.icon)
+          input(type='hidden', name='action', value='addAlbum')
+          input(type='hidden', name='key', value=album.key)
+          button(type='submit') Add to crate
+
+  ul
+    li
+      a(href='/crates') List Crates
+    li
+      a(href='/crate/new') New Crate
+    li
+      a(href='/') Home

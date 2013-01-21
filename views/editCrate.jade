@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 Edit Crate
+
+  form(method='post')
+    div
+      label Name
+      input(name='name', value=crate.name)
+    button(type='submit') Save
+
+  ul
+    li
+      a(href='/crates') List Crates
+    li
+      a(href='/crate/new') New Crate
+    li
+      a(href='/') Home

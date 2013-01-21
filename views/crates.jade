@@ -3,7 +3,12 @@ extends layout
 block content
   ol.crates
     each crate in crates
-      li #{crate.name} (#{crate.createdAt})
+      li
+        a(href='/crate/' + crate.id) #{crate.name} (#{crate.createdAt})
+        form(method='post', action='/crate/' + crate.id)
+          input(type='hidden', name='_method', value='delete')
+          button(type='submit') Delete
+
   ul
     li
       a(href='/crate/new') New Crate

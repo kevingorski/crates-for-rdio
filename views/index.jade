@@ -11,18 +11,12 @@ block content
 
       ul
         li
-          a(href='/clear') Log out
+          a(href='/oauth/logout') Log out
         li
           a(href='/crate/new') New Crate
         li
-          a(href='/crate') List Crates
+          a(href='/crates') List Crates
     
-    ol.albums
-      each album in albums
-        li
-          a(href=album.shortUrl)
-            img(alt=album.name + ' by ' + album.artist, src=album.icon)
-
 block footer
   //- script(src='https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js')
   script
