@@ -10,8 +10,8 @@ block content
       each album in crateAlbums
         li
           form(method='post', action='/crate/' + crate.id)
-            a(href=album.rdioUrl)
-              img(alt=album.name + ' by ' + album.artistName, src=album.icon)
+            a(href=album.shortUrl)
+              img(alt=album.name + ' by ' + album.artist, src=album.icon)
             input(type='hidden', name='action', value='removeAlbum')
             input(type='hidden', name='key', value=album.key)
             button(type='submit') Remove from crate
