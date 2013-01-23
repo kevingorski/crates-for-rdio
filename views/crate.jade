@@ -15,6 +15,7 @@ block content
             input(type='hidden', name='action', value='removeAlbum')
             input(type='hidden', name='key', value=album.key)
             button(type='submit') Remove from crate
+          button(onclick='player.rdio_queue(\'' + album.key + '\');return false;') Add to queue
 
   ol.albums
     each album in heavyRotationAlbums
@@ -33,3 +34,11 @@ block content
       a(href='/crate/new') New Crate
     li
       a(href='/') Home
+
+  #CratesPlayer
+
+block footer
+  script(src='https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js')
+  script
+    var playbackToken = '#{playbackToken}';
+  script(src='/player.js')
